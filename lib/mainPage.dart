@@ -11,8 +11,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  String nameKey = "_key_name";
-  var status;
+  var status, total;
 
   @override
   void initState() {
@@ -22,6 +21,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    loadTotal();
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       if (status == 'true') {
         return Scaffold(
@@ -238,6 +238,10 @@ class _MainPageState extends State<MainPage> {
             'Minha estante',
             style: new TextStyle(fontFamily: 'Pacifico'),
           ),
+          trailing: Text(
+            total == null ? 'null' : total + ' livros',
+            style: new TextStyle(fontFamily: 'Pacifico'),
+          ),
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Estante()));
@@ -364,6 +368,13 @@ class _MainPageState extends State<MainPage> {
     status = await storage.read(key: 'nameKey');
     setState(() {
       this.status = status;
+    });
+  }
+
+  Future loadTotal() async {
+    total = await storage.read(key: 'totalEstante');
+    setState(() {
+      this.total = total;
     });
   }
 }

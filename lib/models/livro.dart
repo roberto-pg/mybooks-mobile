@@ -49,11 +49,15 @@ class Livro {
 Future<List<Livro>> fetchLivros() async {
   Response response;
   Dio dio = new Dio();
+  var livroEstante;
   var token = await storage.read(key: 'jwt');
   dio.options.headers[HttpHeaders.authorizationHeader] = ('Bearer ' + token);
-  response = await dio.get(URL_LIVROS);
 
+  response = await dio.get(URL_LIVROS);
   if (response.statusCode == 200) {
+    livroEstante = response.headers['x-total-count'][0].toString();
+    await storage.write(key: 'totalEstante', value: livroEstante);
+
     Map<String, dynamic> mapResponse = response.data;
     final todos = mapResponse["data"].cast<Map<String, dynamic>>();
     final listOfLivros = await todos.map<Livro>((json) {

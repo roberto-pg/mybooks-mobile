@@ -264,6 +264,7 @@ class _EditarListState extends State<EditarList> {
                                           onPressed: () async {
                                             //Deleta o livro
                                             await deleteLivro(id);
+                                            await fetchLivros();
                                             Navigator.pop(context);
                                             Navigator.push(
                                                 context,
@@ -451,8 +452,8 @@ class _EditarListState extends State<EditarList> {
                                           onPressed: () async {
                                             //Deleta o livro
                                             await deleteLivro(id);
-                                            Navigator.pop(
-                                                context); //Quit Dialog
+                                            await fetchLivros();
+                                            Navigator.pop(context);
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

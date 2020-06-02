@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:livros/mainPage.dart';
 import 'package:livros/models/login.dart';
+import 'models/livro.dart';
 
 final storage = new FlutterSecureStorage();
 
@@ -15,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   bool _validate = false;
   String email, password, aviso;
   var nameKey;
-  var status;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
       var token = await storage.read(key: 'jwt');
 
       if (token != null) {
-        saveData();
+        await saveData();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => MainPage()));
         _key.currentState?.reset();
@@ -157,5 +157,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Future saveData() async {
     await storage.write(key: 'nameKey', value: 'true');
+    await fetchLivros();
   }
 }

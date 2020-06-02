@@ -242,6 +242,7 @@ class _CadastrarState extends State<Cadastrar> {
         "read": _result,
       });
       await addLivro(formData);
+      await fetchLivros();
 
       Navigator.pop(context); //Quit Dialog
     } else {
